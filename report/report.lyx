@@ -9,6 +9,12 @@
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
 \let\endchangemargin=\endlist 
 \pagenumbering{roman}
+
+\usepackage{color}
+
+\definecolor{commentgreen}{RGB}{0,94,11}
+\definecolor{darkblue}{rgb}{0,0,0.75}
+\definecolor{darkred}{rgb}{0.6,0,0}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -39,13 +45,13 @@ figs-within-sections
 \output_sync 0
 \bibtex_command biber
 \index_command default
-\paperfontsize 11
+\paperfontsize default
 \spacing onehalf
 \use_hyperref true
-\pdf_title "Multi-Source Holoportation with LiveScan3D"
+\pdf_title "Hidden Markov Models"
 \pdf_author "Andy Pack"
-\pdf_subject "Undergraduate dissertation outlining developments made to extend the LiveScan3D suite to support streaming multiple scenes simultaneously"
-\pdf_keywords "LiveScan3D, Kinect, Holoportation, AR"
+\pdf_subject "EEEM030"
+\pdf_keywords "EEEM030"
 \pdf_bookmarks true
 \pdf_bookmarksnumbered false
 \pdf_bookmarksopen false
@@ -113,11 +119,30 @@ figs-within-sections
 \begin_layout Title
 
 \size giant
-Speech Recognition: Hidden Markov Models
+Hidden Markov Model Analysis
 \end_layout
 
 \begin_layout Author
 Andy Pack
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 15pheight%
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../../../matlab/lpss/report/surrey.png
+	lyxscale 15
+	width 40col%
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -130,6 +155,10 @@ Andy Pack
 \begin_layout Standard
 \noindent
 \align center
+EEEM030
+\begin_inset Newline newline
+\end_inset
+
 January 2021
 \size large
 
@@ -154,6 +183,10 @@ University of Surrey
 
 \end_layout
 
+\begin_layout Abstract
+abstract
+\end_layout
+
 \begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
@@ -164,7 +197,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage newpage
+\begin_inset Newpage pagebreak
 \end_inset
 
 
@@ -226,8 +259,24 @@ setcounter{page}{1}
 Introduction
 \end_layout
 
-\begin_layout Standard
-Intro
+\begin_layout Subsection
+Brief
+\end_layout
+
+\begin_layout Section
+Implementation
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Section
+Discussion
+\end_layout
+
+\begin_layout Section
+Conclusion
 \end_layout
 
 \begin_layout Standard
@@ -258,7 +307,22 @@ options "bibtotoc"
 
 \begin_layout Section
 \start_of_appendix
-appendix
+Intermediate Results
+\end_layout
+
+\begin_layout Section
+Source Code
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../constants.py"
+lstparams "language=Python,breaklines=true,frame=tb,otherkeywords={self},emph={State},emphstyle={\\ttb\\color{darkred}},basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{darkblue}},emphstyle={\\color{red}},stringstyle={\\color{red}},caption={Constants file defining state transition probabilities and PDFs},label={constants-listing}"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
