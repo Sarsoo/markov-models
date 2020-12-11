@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import numpy as np
+from math import sqrt
 
 
 @dataclass(frozen=True)  # implements constructor among other boilerplate
@@ -9,6 +10,10 @@ class State:
     
     entry: float  # pi
     exit: float  # eta
+
+    @property
+    def std_dev(self):
+        return sqrt(self.variance)
 
 
 state1 = State(1, 1.44, 0.44, 0.02)
