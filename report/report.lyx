@@ -136,7 +136,7 @@ Andy Pack
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename ../../../matlab/lpss/report/surrey.png
+	filename surrey.png
 	lyxscale 15
 	width 40col%
 
@@ -319,6 +319,17 @@ Source Code
 LatexCommand lstinputlisting
 filename "../constants.py"
 lstparams "language=Python,breaklines=true,frame=tb,otherkeywords={self},emph={State},emphstyle={\\ttb\\color{darkred}},basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{darkblue}},emphstyle={\\color{red}},stringstyle={\\color{red}},caption={Constants file defining state transition probabilities and PDFs},label={constants-listing}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../markov.py"
+lstparams "language=Python,breaklines=true,frame=tb,otherkeywords={self},emph={State},emphstyle={\\ttb\\color{darkred}},basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{darkblue}},emphstyle={\\color{red}},stringstyle={\\color{red}},caption={Markov model object defining forward and backward procedure},label={markov-listing}"
 
 \end_inset
 
