@@ -328,6 +328,17 @@ lstparams "language=Python,breaklines=true,frame=tb,otherkeywords={self},emph={S
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand lstinputlisting
+filename "../maths.py"
+lstparams "language=Python,breaklines=true,frame=tb,otherkeywords={self},emph={State},emphstyle={\\ttb\\color{darkred}},basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{darkblue}},emphstyle={\\color{red}},stringstyle={\\color{red}},caption={Maths utility file with definitions for a gaussian},label={maths-listing}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
 filename "../markov.py"
 lstparams "language=Python,breaklines=true,frame=tb,otherkeywords={self},emph={State},emphstyle={\\ttb\\color{darkred}},basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{darkblue}},emphstyle={\\color{red}},stringstyle={\\color{red}},caption={Markov model object defining forward and backward procedure},label={markov-listing}"
 
