@@ -7,10 +7,10 @@ class MarkovModel:
 
     def __init__(self, states: list, observations: list = list(), state_transitions: list = list()):
         self.observations = observations
-        self.state_transitions = state_transitions # use state number not state index, is padded by entry and exit probs
+        self.state_transitions = state_transitions
+        # ^ use state number not state index, is padded by entry and exit probs
 
-        self.states = states # number of states
-        # self.timesteps = list()
+        self.states = states
 
         self.forward = np.zeros((len(states), len(observations)))
         self.p_obs_forward = 0
@@ -54,16 +54,21 @@ class MarkovModel:
     
     def populate_forward(self):
         """Populate forward likelihoods for all states/times"""
+        
+        for t, observation in enumerate(self.observations):
+            # iterate through observations (time)
+            
+            for state_index, state in enumerate(self.states):
+                # both states at each step
 
-        for t, observation in enumerate(self.observations): # iterate through observations (time)
-            for state_index, state in enumerate(self.states): # both states at each step
-
-                state_number = state_index + 1 # for easier reading (arrays 0-indexed, numbers start at 1)
+                state_number = state_index + 1 
+                # ^ for easier reading (arrays 0-indexed, _number 1-indexed)
 
                 if t == 0: # calcualte initial, 0 = first row = initial
                     self.forward[state_index, t] = self.state_transitions[0, state_number] * gaussian(observation, state.mean, state.std_dev)
                 else:
-                    # each state for each time has two paths leading to it, the same state (this) and the other state (other)
+                    # each state for each time has two paths leading to it, 
+                    # the same state (this) and the other state (other)
 
                     other_index = self.get_other_state_index(state_index)
                     other_number = other_index + 1 # for 1 indexing
@@ -81,7 +86,8 @@ class MarkovModel:
 
         sum = 0
         for state_index, final_likelihood in enumerate(self.forward[:, -1]):       
-            sum += final_likelihood * self.state_transitions[state_index + 1, -1] # get exit prob from state transitions
+            sum += final_likelihood * self.state_transitions[state_index + 1, -1]
+            # get exit prob from state transitions ^
 
         self.p_obs_forward = sum
         return sum
@@ -92,13 +98,16 @@ class MarkovModel:
         # initialise with exit probabilities
         self.backward[:, -1] = self.state_transitions[1:len(self.states) + 1, -1]
 
-        # below iterator skips first observation (will be used when finalising P(O|model)) then reverses list [::-1]
-        for t, observation in list(enumerate(self.observations[1:]))[::-1]: # iterate backwards through observations (time)
+        # below iterator skips first observation 
+        # (will be used when finalising P(O|model))
+        # iterate backwards through observations (time) [::-1] <- reverses list
+        for t, observation in list(enumerate(self.observations[1:]))[::-1]:
             
             # print(t, observation)
             for state_index in range(len(self.states)):
 
-                state_number = state_index + 1 # for easier reading (arrays 0-indexed, numbers start at 1)
+                state_number = state_index + 1 
+                # ^ for easier reading (arrays 0-indexed, _number 1-indexed)
 
                 other_index = self.get_other_state_index(state_index)
                 other_number = other_index + 1 # for 1 indexing
@@ -123,7 +132,9 @@ class MarkovModel:
         for state_index, initial_likelihood in enumerate(self.backward[:, 0]):
 
             pi = self.state_transitions[0, state_index + 1]
-            b = gaussian(self.observations[0], self.states[state_index].mean, self.states[state_index].std_dev)
+            b = gaussian(self.observations[0], 
+                         self.states[state_index].mean, 
+                         self.states[state_index].std_dev)
             beta = initial_likelihood
 
             sum +=  pi * b * beta
@@ -134,7 +145,9 @@ class MarkovModel:
     def populate_occupation(self):
         """Populate occupation likelihoods for all states/times"""
 
-        for t in range(len(self.observations)): # iterate through observations (time)
+        for t in range(len(self.observations)): 
+            # iterate through observations (time)
+            
             for state_index in range(len(self.states)):
                 
                 forward_backward = self.forward[state_index, t] * self.backward[state_index, t]
@@ -152,7 +165,9 @@ class MarkovModel:
 
         forward = self.forward[from_index, t - 1]
         transition = self.state_transitions[from_index + 1, to_index + 1]
-        emission = gaussian(self.observations[t], self.states[to_index].mean, self.states[to_index].std_dev)
+        emission = gaussian(self.observations[t], 
+                            self.states[to_index].mean, 
+                            self.states[to_index].std_dev)
         backward = self.backward[to_index, t]
 
         return (forward * transition * emission * backward) / self.observation_likelihood
@@ -173,8 +188,10 @@ class MarkovModel:
             for to_index in range(length):
 
                 # numerator iterates from t = 1 (when 0 indexing, 2 in the notes)
-                transition_sum = sum(self.transition_likelihood(from_index, to_index, t) for t in range(1, len(self.observations)))
-                occupation_sum = sum(self.occupation[from_index, t] for t in range(0, len(self.observations)))
+                transition_sum = sum(self.transition_likelihood(from_index, to_index, t) 
+                                     for t in range(1, len(self.observations)))
+                occupation_sum = sum(self.occupation[from_index, t] 
+                                     for t in range(0, len(self.observations)))
 
                 new_transitions[from_index, to_index] = transition_sum / occupation_sum
 
@@ -185,7 +202,8 @@ class MarkovModel:
         
         numerator = 0 # sum over observations( occupation * observation )
         denominator = 0 # sum over observations( occupation )
-        for t, observation in enumerate(self.observations): # iterate through observations (time)
+        for t, observation in enumerate(self.observations): 
+            # iterate through observations (time)
 
             occupation_likelihood = self.occupation[state_index, t]
 
@@ -204,7 +222,8 @@ class MarkovModel:
         
         numerator = 0 # sum over observations( occupation * (observation - mean)^2 )
         denominator = 0 # sum over observations( occupation )
-        for t, observation in enumerate(self.observations): # iterate through observations (time)
+        for t, observation in enumerate(self.observations): 
+            # iterate through observations (time)
 
             occupation_likelihood = self.occupation[state_index, t]
 

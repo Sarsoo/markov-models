@@ -10,6 +10,7 @@
 \let\endchangemargin=\endlist 
 \pagenumbering{roman}
 
+\usepackage{pxfonts}
 \usepackage{color}
 
 \definecolor{commentgreen}{RGB}{0,94,11}
@@ -21,7 +22,6 @@
 customHeadersFooters
 minimalistic
 todonotes
-figs-within-sections
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -105,7 +105,7 @@ figs-within-sections
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
-\listings_params "language=Python,breaklines=true,frame=tb,otherkeywords={self},emph={State},emphstyle={\ttb\color{darkred}},basicstyle={\ttfamily},commentstyle={\color{commentgreen}\itshape},keywordstyle={\color{darkblue}},emphstyle={\color{red}},stringstyle={\color{red}}"
+\listings_params "language=Python,breaklines=true,frame=tb,otherkeywords={self},emph={State},emphstyle={\ttb\color{darkred}},basicstyle={\ttfamily},commentstyle={\bfseries\color{commentgreen}\itshape},keywordstyle={\color{darkblue}},emphstyle={\color{red}},stringstyle={\color{red}}"
 \bullet 1 0 9 -1
 \bullet 2 0 24 -1
 \tracking_changes false
@@ -418,7 +418,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-As previously mentioned, the states are described 1D continuous probability
+As previously mentioned, the states are described by 1D continuous probability
  density functions (PDF) of a Gaussian profile.
  Each has an associated mean and variance as seen below,
 \end_layout
@@ -557,7 +557,27 @@ Finally, a set of observations from the above model are provided below,
 
 \begin_layout Standard
 These are used as the basis for training the model using the Baum-Welch
- equations.
+ equations
+\begin_inset Flex TODO Note (Margin)
+status open
+
+\begin_layout Plain Layout
+Expectation-maximisation
+\end_layout
+
+\end_inset
+
+
+\begin_inset Flex TODO Note (Margin)
+status open
+
+\begin_layout Plain Layout
+Cite
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -611,12 +631,74 @@ name "fig:State-topology"
 
 \end_layout
 
+\begin_layout Standard
+The work was completed using Python
+\begin_inset CommandInset citation
+LatexCommand cite
+key "python"
+literal "false"
+
+\end_inset
+
+ and the Jupyter notebook
+\begin_inset CommandInset citation
+LatexCommand cite
+key "jupyter"
+literal "false"
+
+\end_inset
+
+.
+ Apart from the standard library, NumPy
+\begin_inset CommandInset citation
+LatexCommand cite
+key "numpy"
+literal "false"
+
+\end_inset
+
+ was used for a n-dimensional array implementation.
+\end_layout
+
+\begin_layout Standard
+An implementation of the Gaussian function was written in order to derive
+ output probability densities for each state given an observation, see listing
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "maths-listing"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ This was used to plot each of the PDFs and throughout the likelihood calculatio
+ns.
+\end_layout
+
 \begin_layout Section
 Results
 \end_layout
 
 \begin_layout Subsection
 Output Probability Density Functions
+\end_layout
+
+\begin_layout Standard
+The Gaussian probability functions described by the initial parameters can
+ be seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:PDFs"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -630,7 +712,8 @@ status open
 \align center
 \begin_inset Graphics
 	filename res/pdfs.png
-	width 50col%
+	lyxscale 50
+	width 70col%
 
 \end_inset
 
@@ -667,6 +750,33 @@ name "fig:PDFs"
 
 \begin_layout Subsection
 Observation Probability Densities
+\end_layout
+
+\begin_layout Standard
+The output probability densities for each observation in each state can
+ be seen in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:obs-prob-dens"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ These observations can be seen overlaid on the original PDFs in figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:PDFs-w-obs"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1161,7 +1271,8 @@ status open
 \align center
 \begin_inset Graphics
 	filename res/pdfs-w-obs.png
-	width 50col%
+	lyxscale 50
+	width 70col%
 
 \end_inset
 
@@ -1204,6 +1315,50 @@ name "fig:PDFs-w-obs"
 
 \begin_layout Subsection
 Forward Procedure and Likelihoods
+\end_layout
+
+\begin_layout Standard
+The forward likelihoods calculated as part of the forward procedure can
+ be seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Forward-likelihoods"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The natural logarithm of these results can be seen graphically in figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:forward-log-like"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The log-likelihoods were used here as subsequent values can decrease by
+ orders of magnitude making it hard to display, as a monotonic function,
+ the relationship between values remains relevant when presenting the log
+ of each value
+\begin_inset Flex TODO Note (Margin)
+status open
+
+\begin_layout Plain Layout
+Reword?
+\end_layout
+
+\end_inset
+
+.
+ For state 1, the forward likelihood generally decreases over time, this
+ pattern is not followed by state 2.
+ State 2 begins decreasing before rapidly decreasing and increasing.
 \end_layout
 
 \begin_layout Standard
@@ -1620,7 +1775,41 @@ name "tab:Forward-likelihoods"
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
 \begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename res/forward-logline.png
+	lyxscale 50
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Forward log-likelihood for each state over all observations
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:forward-log-like"
+
+\end_inset
+
 
 \end_layout
 
@@ -1629,8 +1818,74 @@ name "tab:Forward-likelihoods"
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using the forward procedure, the observation likelihood, 
+\begin_inset Formula $P\left(\mathcal{O}|\lambda\right)$
+\end_inset
+
+, was calculated as follows
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P\left(\mathcal{O}|\lambda\right)=\eta_{1}\alpha_{9}\left(1\right)+\eta_{2}\alpha_{9}\left(2\right)\label{eq:forward-symbolic}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P\left(\mathcal{O}|\lambda\right)=\left(0.02\cdot5.63\times10^{-10}\right)+\left(0.03\cdot6.02\times10^{-9}\right)=1.92\times10^{-10}\label{eq:forward}
+\end{equation}
+
+\end_inset
+
+to 2 decimal places.
+\end_layout
+
 \begin_layout Subsection
 Backward Procedure and Likelihoods
+\end_layout
+
+\begin_layout Standard
+The backward likelihoods were calculated as part of the backwards procedure
+ and can be seen in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Backward-likelihoods"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the log-likelihoods can be seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:backward-log-like"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Reading backwards in time (from bottom to top), for both states the backwards
+ likelihood can be seen to decrease to a minimum at 
+\begin_inset Formula $t=1$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2055,12 +2310,128 @@ name "tab:Backward-likelihoods"
 
 \end_layout
 
-\begin_layout Subsection
-Observations Likelihood
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename res/backward-logline.png
+	lyxscale 50
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Backward log-likelihood for each state over all observations
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:backward-log-like"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalising the backward procedure can also produce 
+\begin_inset Formula $P\left(\mathcal{O}|\lambda\right)$
+\end_inset
+
+, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P\left(\mathcal{O}|\lambda\right)=\pi_{1}b_{1}\left(o_{1}\right)\beta_{1}\left(1\right)+\pi_{2}b_{2}\left(o_{1}\right)\beta_{1}\left(2\right)\label{eq:backward-symbolic}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P\left(\mathcal{O}|\lambda\right)=\left(0.44\cdot0.022\cdot6.58\times10^{-11}\right)+\left(0.56\cdot0.55\cdot6.25\times10^{-10}\right)=1.92\times10^{-10}\label{eq:backward}
+\end{equation}
+
+\end_inset
+
+to 2 decimal places.
+ Looking back to equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:forward"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, these can be seen to be the same, as expected
+\begin_inset Flex TODO Note (Margin)
+status open
+
+\begin_layout Plain Layout
+Maybe move to discussion?
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
 Occupation Likelihoods
+\end_layout
+
+\begin_layout Standard
+The above forward and backward likelihoods were used to calculate the occupation
+ likelihoods of each state at each time step, the results can be seen in
+ table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Occupation-likelihoods"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and are presented graphically in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:occupation-likelihood-bars"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2440,12 +2811,315 @@ name "tab:Occupation-likelihoods"
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename res/occupation-line.png
+	lyxscale 50
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Occupation likelihoods for each state for each observation
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:occupation-likelihood-bars"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Baum-Welch Re-estimations
 \end_layout
 
 \begin_layout Subsubsection
 Output Parameters
+\end_layout
+
+\begin_layout Standard
+Following one iteration of Baum-Welch training, the output Gaussian parameters
+ were estimated as follows (2 d.p.),
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+State, 
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mean, 
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.67
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.09
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variance, 
+\begin_inset Formula $\varSigma_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.85
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.37
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This represents the following deltas from the original parameters (2 s.f.),
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+State, 
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mean, 
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
++0.67
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
++0.089
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variance, 
+\begin_inset Formula $\varSigma_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
++0.41
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.11
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Displayed graphically, these two sets of Gaussian functions can be seen
+ in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Re-estimated-PDFs"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Compared to the original function, increasing the standard deviation has
+ widened and shortened the new function for state 1.
+ The slight increase in mean has also shifted the function to the right.
+ For state 2, the new function has a tighter, taller distribution as a result
+ of the decreased variance; the mean has, again, been slightly shifted to
+ the right.
 \end_layout
 
 \begin_layout Standard
@@ -2459,7 +3133,8 @@ status open
 \align center
 \begin_inset Graphics
 	filename res/re-est-pdfs.png
-	width 50col%
+	lyxscale 50
+	width 70col%
 
 \end_inset
 
@@ -2488,10 +3163,6 @@ name "fig:Re-estimated-PDFs"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsubsection
-State Transitions
 \end_layout
 
 \begin_layout Section
@@ -2523,13 +3194,6 @@ btprint "btPrintCited"
 bibfiles "references"
 options "bibtotoc"
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
 \end_inset
 
 
@@ -2567,11 +3231,7 @@ lstparams "caption={Maths utility file with definition for a gaussian},label={ma
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand lstinputlisting
-filename "../markov.py"
-lstparams "caption={Markov model object defining forward and backward procedure, occupation likelihoods, Baum-Welch equations},label={markov-listing}"
-
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -2580,8 +3240,8 @@ lstparams "caption={Markov model object defining forward and backward procedure,
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand lstinputlisting
-filename "../markovlog.py"
-lstparams "caption={Child Markov model re-implementing calculations using log probability and likelihood},label={log-markov-listing}"
+filename "../markov.py"
+lstparams "caption={Markov model object defining forward and backward procedure, occupation likelihoods, Baum-Welch equations},label={markov-listing}"
 
 \end_inset
 
@@ -2599,14 +3259,97 @@ lstparams "caption={Child Markov model re-implementing calculations using log pr
 The development of the model behind this report was completed using Jupyter
  Notebook.
  The used notebook can be seen formatted in plain text below, the relevant
- mark scheme elements are referenced in brackets.
+ mark scheme elements are referenced in brackets (
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+\noindent
+
+%%
+\end_layout
+
+\end_inset
+
+ = cell delimiter).
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand lstinputlisting
 filename "../notebook.py"
-lstparams "caption={Plain output of Jupyter Notebook used for development and debugging},label={notebook-listing}"
+lstparams "commentstyle={\\large\\bfseries\\color{commentgreen}},caption={Plain output of Jupyter Notebook used for development and debugging},label={notebook-listing}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Extensions
+\end_layout
+
+\begin_layout Standard
+A few extra calculations were done with the model, figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:5-training-iterations"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows how the output probability density functions move during 5 iterations
+ of training.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename res/iterated-pdfs.png
+	lyxscale 50
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+5 iterations of training completed using the Baum-Welch equations
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:5-training-iterations"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
