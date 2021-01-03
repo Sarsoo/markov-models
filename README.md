@@ -1,7 +1,7 @@
 Hidden Markov Models
 ====================
 
-Speech recognition coursework focusing on training and  analysing hidden markov models.
+Speech recognition coursework focusing on training and  analysing hidden markov models, main dev notebook [here](markov.ipynb).
 
 ![PDFs with observations marked](report/res/pdfs-w-obs.png)
 Probability density functions with provided observations marked

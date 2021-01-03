@@ -8,7 +8,7 @@
 \begin_preamble
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
 \let\endchangemargin=\endlist 
-\pagenumbering{roman}
+\pagenumbering{gobble}
 
 \usepackage{pxfonts}
 \usepackage{color}
@@ -184,6 +184,22 @@ University of Surrey
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagenumbering{roman}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Abstract
 abstract
 \end_layout
@@ -282,6 +298,16 @@ literal "false"
 memoryless
 \emph default
 .
+ The hidden Markov model extends the standard Markov chain by modeling a
+ system where the states are not directly observable but are hidden
+\begin_inset CommandInset citation
+LatexCommand cite
+key "standford-hmm-book"
+literal "false"
+
+\end_inset
+
+, instead the states are inferred from the visible observations.
 \end_layout
 
 \begin_layout Standard
@@ -676,6 +702,31 @@ noprefix "false"
 .
  This was used to plot each of the PDFs and throughout the likelihood calculatio
 ns.
+\end_layout
+
+\begin_layout Standard
+The forward and backward procedure are outlined by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "standford-hmm-book"
+literal "false"
+
+\end_inset
+
+, the equations for both forward and backward likelihood can be seen below,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex TODO Note (inline)
+status open
+
+\begin_layout Plain Layout
+Finish?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -3261,6 +3312,7 @@ The development of the model behind this report was completed using Jupyter
  The used notebook can be seen formatted in plain text below, the relevant
  mark scheme elements are referenced in brackets (
 \begin_inset listings
+lstparams "language=Python,basicstyle={\ttfamily}"
 inline true
 status open
 
@@ -3310,6 +3362,11 @@ noprefix "false"
 
  shows how the output probability density functions move during 5 iterations
  of training.
+ State 1's output function can be seen to spread out (increasing variance)
+ and shift slightly to the right (increasing mean).
+ State 2's mean begins by increasing before decreasing below the initial
+ value.
+ The variance also decreases, tightening the function.
 \end_layout
 
 \begin_layout Standard
@@ -3350,6 +3407,20 @@ name "fig:5-training-iterations"
 
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{a}_{ij}=\left[\begin{array}{cc}
+0.80 & 0.19\\
+0.26 & 0.50
+\end{array}\right]
+\]
 
 \end_inset
 
