@@ -26,7 +26,7 @@ todonotes
 \maintain_unincluded_children false
 \language english
 \language_package default
-\inputencoding auto
+\inputencoding utf8
 \fontencoding global
 \font_roman "default" "default"
 \font_sans "default" "default"
@@ -201,7 +201,14 @@ pagenumbering{roman}
 \end_layout
 
 \begin_layout Abstract
-abstract
+An analysis of a continuous probability density hidden Markov model is presented.
+ Forward and backward likelihoods for all observation/state combinations
+ are given before confirming the same observation likelihood from each method.
+ The occupation likelihoods for each state at each time step are calculated
+ and used in combination with the transition likelihoods to complete an
+ iteration of Baum-Welch training.
+ This procedure results in a re-estimation of the output function parameters,
+ these are compared to the originals for analysis.
 \end_layout
 
 \begin_layout Standard
@@ -226,6 +233,17 @@ LatexCommand tableofcontents
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand lstlistoflistings
 
@@ -284,7 +302,7 @@ The Markov model is a stochastic model for analysing random processes.
 Markov property
 \emph default
  which states that the future state of the system depends only on the current
- state
+ state 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "towards-data-science-markov-intro"
@@ -298,8 +316,8 @@ literal "false"
 memoryless
 \emph default
 .
- The hidden Markov model extends the standard Markov chain by modeling a
- system where the states are not directly observable but are hidden
+ The hidden Markov model extends the standard Markov chain by modelling
+ a system where the states are not directly observable but are hidden 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "standford-hmm-book"
@@ -307,46 +325,8 @@ literal "false"
 
 \end_inset
 
-, instead the states are inferred from the visible observations.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex TODO Note (inline)
-status open
-
-\begin_layout Plain Layout
-Described markov chains
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex TODO Note (inline)
-status open
-
-\begin_layout Plain Layout
-Difference with hidden markov models
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex TODO Note (inline)
-status open
-
-\begin_layout Plain Layout
-Application to machine learning and speech in particular
-\end_layout
-
-\end_inset
-
-
+, instead the states are inferred from the state topology and visible observatio
+ns.
 \end_layout
 
 \begin_layout Subsection
@@ -356,11 +336,17 @@ Brief
 \begin_layout Standard
 This work analyses a continuous-density hidden Markov model of 2 emitting
  states describing a 1D observation space.
- Various statistics and calculations will be conducted on the model including
- forward, backward, occupation and transition likelihoods.
- Using these, an iteration of training will be completed using the Baum-Welch
- equations resulting in a new set of transition probabilities and re-estimated
- output probabilities.
+ Various statistics and calculations will be analysed including forward,
+ backward, occupation and transition likelihoods.
+ Using these, an iteration of Baum-Welch training 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "standford-hmm-book,pj-h-baum-welch"
+literal "false"
+
+\end_inset
+
+ will be completed resulting in re-estimated output probabilities.
 \end_layout
 
 \begin_layout Standard
@@ -393,6 +379,25 @@ A=\left\{ \pi_{j},a_{ij},\eta_{i}\right\}
 \end_layout
 
 \begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "30col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \pi_{j}=\left\{ 0.44,0.56\right\} 
@@ -403,7 +408,32 @@ A=\left\{ \pi_{j},a_{ij},\eta_{i}\right\}
 
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "30col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 a_{ij}=\left[\begin{array}{cc}
@@ -417,11 +447,41 @@ a_{ij}=\left[\begin{array}{cc}
 
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "30col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \eta_{i}=\left\{ 0.02,0.03\right\} 
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -583,27 +643,15 @@ Finally, a set of observations from the above model are provided below,
 
 \begin_layout Standard
 These are used as the basis for training the model using the Baum-Welch
- equations
-\begin_inset Flex TODO Note (Margin)
-status open
-
-\begin_layout Plain Layout
-Expectation-maximisation
-\end_layout
+ algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "standford-hmm-book,pj-h-baum-welch"
+literal "false"
 
 \end_inset
 
-
-\begin_inset Flex TODO Note (Margin)
-status open
-
-\begin_layout Plain Layout
-Cite
-\end_layout
-
-\end_inset
-
-.
+, a form of expectation-maximisation.
 \end_layout
 
 \begin_layout Section
@@ -658,7 +706,7 @@ name "fig:State-topology"
 \end_layout
 
 \begin_layout Standard
-The work was completed using Python
+The work was completed using Python 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "python"
@@ -666,7 +714,15 @@ literal "false"
 
 \end_inset
 
- and the Jupyter notebook
+, Matplotlib 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hunter2007matplotlib"
+literal "false"
+
+\end_inset
+
+ and the Jupyter notebook 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "jupyter"
@@ -675,7 +731,7 @@ literal "false"
 \end_inset
 
 .
- Apart from the standard library, NumPy
+ Apart from the standard library, NumPy 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "numpy"
@@ -684,12 +740,16 @@ literal "false"
 \end_inset
 
  was used for a n-dimensional array implementation.
-\end_layout
+ An implementation of the Gaussian function 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wolfram-gaussian"
+literal "false"
 
-\begin_layout Standard
-An implementation of the Gaussian function was written in order to derive
- output probability densities for each state given an observation, see listing
- 
+\end_inset
+
+ was written in order to derive output probability densities for each state
+ given an observation, see listing 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "maths-listing"
@@ -700,28 +760,604 @@ noprefix "false"
 \end_inset
 
 .
- This was used to plot each of the PDFs and throughout the likelihood calculatio
-ns.
 \end_layout
 
 \begin_layout Standard
 The forward and backward procedure are outlined by 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "standford-hmm-book"
+key "standford-hmm-book,pj-h-forward-backward"
 literal "false"
 
 \end_inset
 
-, the equations for both forward and backward likelihood can be seen below,
+, the algorithm for both forward and backward likelihood can be seen in
+ figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:forward-algorithm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:backward-algorithm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Following these procedures, the values were used to calculate the transition
+ and occupation likelihoods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "standford-hmm-book,pj-h-baum-welch"
+literal "false"
+
+\end_inset
+
+ as described in figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:occupation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:transition"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, this constitutes the E-step of the training process 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pj-h-pdf-re-estimate"
+literal "false"
+
+\end_inset
+
+.
+ With all likelihoods calculated, the PDF parameters were re-estimated as
+ described in figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Mean-re-estimate"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Variance-re-estimate"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, this is one half of the M-step of the training procedure 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pj-h-pdf-re-estimate"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Flex TODO Note (inline)
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-Finish?
+\begin_inset Box Shadowbox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Initialisation:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\alpha_{1}\left(i\right)=\pi_{i}b_{i}\left(o_{1}\right)\qquad1\leq i\leq N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Iteration:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\alpha_{t}\left(j\right)=\left[\sum_{i=1}^{N}\alpha_{t-1}\left(i\right)a_{ij}\right]b_{j}\left(o_{t}\right)\qquad1\leq j\leq N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Finalise:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+P\left(\mathcal{O}|\lambda\right)=\sum_{i=1}^{N}\alpha_{T}\left(i\right)\eta_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Forward procedure 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "standford-hmm-book,pj-h-forward-backward"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:forward-algorithm"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Shadowbox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Initialisation:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\beta_{T}\left(i\right)=\eta_{i}\qquad1\leq i\leq N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Iteration:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\beta_{t}\left(i\right)=\sum_{j=1}^{N}a_{ij}b_{j}\left(o_{t+1}\right)\beta_{t+1}\left(j\right)\qquad1\leq i\leq N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Finalise:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+P\left(\mathcal{O}|\lambda\right)=\sum_{i=1}^{N}\pi_{i}b_{i}\left(o_{1}\right)\beta_{1}\left(i\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Backward procedure 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "standford-hmm-book,pj-h-forward-backward"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:backward-algorithm"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Shadowbox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\gamma_{t}\left(i\right)=P\left(x_{t}=i|\mathcal{O},\lambda\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\gamma_{t}\left(i\right)=\frac{\alpha_{t}\left(i\right)\beta_{t}\left(i\right)}{P\left(\mathcal{O}|\lambda\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Occupation likelihood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "standford-hmm-book,pj-h-baum-welch"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:occupation"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Shadowbox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\xi_{t}\left(i,j\right)=P\left(x_{t-1}=i,x_{t}=j|\mathcal{O},\lambda\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\xi_{t}\left(i,j\right)=\frac{\alpha_{t-1}\left(i\right)a_{ij}b_{j}\left(o_{t}\right)\beta_{t}\left(j\right)}{P\left(\mathcal{O}|\lambda\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Transition likelihood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "standford-hmm-book,pj-h-baum-welch"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:transition"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Shadowbox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\hat{\mu_{i}}=\frac{\sum_{t=1}^{T}\gamma_{t}\left(i\right)o_{t}}{\sum_{t=1}^{T}\gamma_{t}\left(i\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mean re-estimation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pj-h-pdf-re-estimate"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Mean-re-estimate"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Shadowbox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\hat{\Sigma_{i}}=\frac{\sum_{t=1}^{T}\gamma_{t}\left(i\right)\left(o_{t}-\mu_{i}\right)^{2}}{\sum_{t=1}^{T}\gamma_{t}\left(i\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Variance re-estimation adapted for uni-variate observations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pj-h-pdf-re-estimate"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Variance-re-estimate"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -738,8 +1374,8 @@ Output Probability Density Functions
 \end_layout
 
 \begin_layout Standard
-The Gaussian probability functions described by the initial parameters can
- be seen in figure 
+The Gaussian probability density functions described by the initial parameters
+ can be seen in figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:PDFs"
@@ -1287,7 +1923,7 @@ t
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Probability densities for each observation from each state to (2 s.f)
+Probability densities for each observation from each state (2 s.f)
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:obs-prob-dens"
@@ -1393,23 +2029,33 @@ noprefix "false"
 \end_inset
 
 .
- The log-likelihoods were used here as subsequent values can decrease by
- orders of magnitude making it hard to display, as a monotonic function,
- the relationship between values remains relevant when presenting the log
- of each value
-\begin_inset Flex TODO Note (Margin)
-status open
-
-\begin_layout Plain Layout
-Reword?
-\end_layout
+ The log-likelihoods were used here as subsequent original values can decrease
+ by orders of magnitude making it hard to visualise, as a monotonic function
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pj-h-forward-backward,wolfram-monotone"
+literal "false"
 
 \end_inset
 
+, the relationship between values remains relevant when presenting the log
+ of each value.
+ 
+\end_layout
+
+\begin_layout Standard
+Both states generally decrease over time, however, state 1 has a peak while
+ state 2 drastically drops around 
+\begin_inset Formula $t=4$
+\end_inset
+
 .
- For state 1, the forward likelihood generally decreases over time, this
- pattern is not followed by state 2.
- State 2 begins decreasing before rapidly decreasing and increasing.
+ State 1 then finally peaks again at 
+\begin_inset Formula $t=9$
+\end_inset
+
+ to finish higher than state 2.
 \end_layout
 
 \begin_layout Standard
@@ -1843,7 +2489,7 @@ status open
 \begin_inset Graphics
 	filename res/forward-logline.png
 	lyxscale 50
-	width 50col%
+	width 70col%
 
 \end_inset
 
@@ -1875,18 +2521,28 @@ name "fig:forward-log-like"
 \end_layout
 
 \begin_layout Standard
-Using the forward procedure, the observation likelihood, 
+Using the forward procedure (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:forward-algorithm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), the observation likelihood, 
 \begin_inset Formula $P\left(\mathcal{O}|\lambda\right)$
 \end_inset
 
-, was calculated as follows
+, was calculated as follows,
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{equation}
-P\left(\mathcal{O}|\lambda\right)=\eta_{1}\alpha_{9}\left(1\right)+\eta_{2}\alpha_{9}\left(2\right)\label{eq:forward-symbolic}
-\end{equation}
+\[
+P\left(\mathcal{O}|\lambda\right)=\eta_{1}\alpha_{9}\left(1\right)+\eta_{2}\alpha_{9}\left(2\right)
+\]
 
 \end_inset
 
@@ -2373,7 +3029,7 @@ status open
 \begin_inset Graphics
 	filename res/backward-logline.png
 	lyxscale 50
-	width 50col%
+	width 70col%
 
 \end_inset
 
@@ -2414,9 +3070,9 @@ Finalising the backward procedure can also produce
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{equation}
-P\left(\mathcal{O}|\lambda\right)=\pi_{1}b_{1}\left(o_{1}\right)\beta_{1}\left(1\right)+\pi_{2}b_{2}\left(o_{1}\right)\beta_{1}\left(2\right)\label{eq:backward-symbolic}
-\end{equation}
+\[
+P\left(\mathcal{O}|\lambda\right)=\pi_{1}b_{1}\left(o_{1}\right)\beta_{1}\left(1\right)+\pi_{2}b_{2}\left(o_{1}\right)\beta_{1}\left(2\right)
+\]
 
 \end_inset
 
@@ -2425,9 +3081,9 @@ P\left(\mathcal{O}|\lambda\right)=\pi_{1}b_{1}\left(o_{1}\right)\beta_{1}\left(1
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{equation}
-P\left(\mathcal{O}|\lambda\right)=\left(0.44\cdot0.022\cdot6.58\times10^{-11}\right)+\left(0.56\cdot0.55\cdot6.25\times10^{-10}\right)=1.92\times10^{-10}\label{eq:backward}
-\end{equation}
+\[
+P\left(\mathcal{O}|\lambda\right)=\left(0.44\cdot0.022\cdot6.58\times10^{-11}\right)+\left(0.56\cdot0.55\cdot6.25\times10^{-10}\right)=1.92\times10^{-10}
+\]
 
 \end_inset
 
@@ -2442,17 +3098,7 @@ noprefix "false"
 
 \end_inset
 
-, these can be seen to be the same, as expected
-\begin_inset Flex TODO Note (Margin)
-status open
-
-\begin_layout Plain Layout
-Maybe move to discussion?
-\end_layout
-
-\end_inset
-
-.
+, these can be seen to be the same, as expected.
 \end_layout
 
 \begin_layout Subsection
@@ -2472,7 +3118,7 @@ noprefix "false"
 
 \end_inset
 
- and are presented graphically in figure 
+ and are visualised in figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:occupation-likelihood-bars"
@@ -2906,16 +3552,12 @@ name "fig:occupation-likelihood-bars"
 \end_layout
 
 \begin_layout Subsection
-Baum-Welch Re-estimations
-\end_layout
-
-\begin_layout Subsubsection
-Output Parameters
+Re-estimated Output Parameters
 \end_layout
 
 \begin_layout Standard
 Following one iteration of Baum-Welch training, the output Gaussian parameters
- were estimated as follows (2 d.p.),
+ were re-estimated as follows (2 d.p.),
 \end_layout
 
 \begin_layout Standard
@@ -3020,7 +3662,7 @@ Variance,
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.37
+0.38
 \end_layout
 
 \end_inset
@@ -3169,8 +3811,7 @@ noprefix "false"
  widened and shortened the new function for state 1.
  The slight increase in mean has also shifted the function to the right.
  For state 2, the new function has a tighter, taller distribution as a result
- of the decreased variance; the mean has, again, been slightly shifted to
- the right.
+ of the decreased variance; the mean has, again, slightly increased.
 \end_layout
 
 \begin_layout Standard
@@ -3220,8 +3861,48 @@ name "fig:Re-estimated-PDFs"
 Discussion
 \end_layout
 
+\begin_layout Standard
+From the occupation likelihoods, the state sequence for the training data
+ is suggested to be as follows,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S=\left\{ 2,2,2,1,1,1,1,1,2\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Interestingly, when comparing the occupation likelihoods to each observation's
+ probability density (P.D), the majority are in alignment, that is, the state
+ with the highest occupation likelihood also has the higher P.D per observation.
+ This is not the case for 
+\begin_inset Formula $o_{6}=3.0$
+\end_inset
+
+ where, despite state 2 having a higher output P.D, the occupation likelihoods
+ would in fact suggest that this was emitted from state 1.
+ This would be a result of the model topology and relative transition likelihood
+s, the probability that the state alternates is low (6% and 4%).
+\end_layout
+
 \begin_layout Section
 Conclusion
+\end_layout
+
+\begin_layout Standard
+An analysis of hidden Markov models has been demonstrated with a single
+ iteration of Baum-Welch training providing new parameter estimations.
+ The forward and backward procedures were demonstrated and confirmed to
+ produce the same observation likelihood.
+ The occupation likelihoods were calculated and used to provide a suggestion
+ to the state sequence for the observations.
+ Finally, new output parameters were estimated and compared to the originals.
 \end_layout
 
 \begin_layout Standard
@@ -3252,10 +3933,6 @@ options "bibtotoc"
 
 \begin_layout Section
 \start_of_appendix
-Intermediate Results
-\end_layout
-
-\begin_layout Section
 Source Code
 \end_layout
 
@@ -3310,21 +3987,7 @@ lstparams "caption={Markov model object defining forward and backward procedure,
 The development of the model behind this report was completed using Jupyter
  Notebook.
  The used notebook can be seen formatted in plain text below, the relevant
- mark scheme elements are referenced in brackets (
-\begin_inset listings
-lstparams "language=Python,basicstyle={\ttfamily}"
-inline true
-status open
-
-\begin_layout Plain Layout
-\noindent
-
-%%
-\end_layout
-
-\end_inset
-
- = cell delimiter).
+ mark scheme elements are referenced in brackets (%%= cell delimiter).
 \end_layout
 
 \begin_layout Standard
@@ -3350,7 +4013,7 @@ Extensions
 \end_layout
 
 \begin_layout Standard
-A few extra calculations were done with the model, figure 
+Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:5-training-iterations"
@@ -3360,7 +4023,7 @@ noprefix "false"
 
 \end_inset
 
- shows how the output probability density functions move during 5 iterations
+ shows how the output probability density functions move during 50 iterations
  of training.
  State 1's output function can be seen to spread out (increasing variance)
  and shift slightly to the right (increasing mean).
@@ -3407,20 +4070,6 @@ name "fig:5-training-iterations"
 
 
 \end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\hat{a}_{ij}=\left[\begin{array}{cc}
-0.80 & 0.19\\
-0.26 & 0.50
-\end{array}\right]
-\]
 
 \end_inset
 

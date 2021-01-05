@@ -53,7 +53,7 @@ plt.show()
 # %%
 for obs in observations:
     print(f'{obs} -> State 1: {gaussian(obs, state1.mean, state1.std_dev)},', 
-                    'State 2: {gaussian(obs, state2.mean, state2.std_dev)}')
+                   f'State 2: {gaussian(obs, state2.mean, state2.std_dev)}')
 
 
 # %%
@@ -357,33 +357,39 @@ plt.show()
 # # Multiple Iterations
 
 # %%
-iterations = 5
+iterations = 50
 
-mean = [state1.mean, state2.mean]
-var = [state1.variance, state2.variance]
+fig = plt.figure(dpi=fig_dpi, tight_layout=True)
+ax = fig.add_subplot(1, 1, 1, xmargin=0, ymargin=0)
 
-plt.plot(x, [gaussian(i, mean[0], sqrt(var[0])) for i in x], '--', c='r', linewidth=1.0)
-plt.plot(x, [gaussian(i, mean[1], sqrt(var[1])) for i in x], '--', c='b', linewidth=1.0)
+iter_mean = [state1.mean, state2.mean]
+iter_var = [state1.variance, state2.variance]
+iter_state_transitions = state_transition
+
+ax.plot(x, [gaussian(i, iter_mean[0], sqrt(iter_var[0])) for i in x], '--', c='r', linewidth=1.0)
+ax.plot(x, [gaussian(i, iter_mean[1], sqrt(iter_var[1])) for i in x], '--', c='b', linewidth=1.0)
 
 label1=None
 label2=None
 
 for i in range(iterations):
-    model = MarkovModel(states=[State(mean[0], var[0], state1.entry, state1.exit), 
-                                State(mean[1], var[1], state2.entry, state2.exit)], 
-                        observations=observations, 
-                        state_transitions=state_transition)
-    model.populate()
+    iter_model = MarkovModel(states=[State(iter_mean[0], iter_var[0], state1.entry, state1.exit), 
+                                     State(iter_mean[1], iter_var[1], state2.entry, state2.exit)],
+                             observations=observations,
+                             state_transitions=iter_state_transitions).populate()
 
-    mean = model.reestimated_mean()
-    var = model.reestimated_variance()
+    # NEW PARAMETERS
+    iter_mean = iter_model.reestimated_mean()
+    iter_var = iter_model.reestimated_variance()
+    iter_state_transitions[1:3, 1:3] = iter_model.reestimated_state_transitions()
 
-    print(f"mean ({i}): ", mean)
-    print(f"var ({i}): ", var)
+    print(f"mean ({i}): ", iter_mean)
+    print(f"var ({i}): ", iter_var)
+    print(iter_model.reestimated_state_transitions())
     print()
 
-    state_1_y = [gaussian(i, mean[0], sqrt(var[0])) for i in x]
-    state_2_y = [gaussian(i, mean[1], sqrt(var[1])) for i in x]
+    state_1_y = [gaussian(i, iter_mean[0], sqrt(iter_var[0])) for i in x]
+    state_2_y = [gaussian(i, iter_mean[1], sqrt(iter_var[1])) for i in x]
 
     style = '--'
     linewidth = 1.0
@@ -393,22 +399,19 @@ for i in range(iterations):
         label1='State 1'
         label2='State 2'
 
-    plt.plot(x, state_1_y, style, c='r', label=label1, linewidth=linewidth)
-    plt.plot(x, state_2_y, style, c='b', label=label2, linewidth=linewidth)
+    ax.plot(x, state_1_y, style, c='r', label=label1, linewidth=linewidth)
+    ax.plot(x, state_2_y, style, c='b', label=label2, linewidth=linewidth)
 
-plt.title("Probability Density Function Iterations")
+ax.set_title("Probability Density Function Iterations")
 
-plt.xlabel(x_label)
-plt.ylabel(y_label)
-plt.grid(linestyle="--")
-plt.legend()
+ax.set_xlabel(x_label)
+ax.set_ylabel(y_label)
+ax.grid(linestyle="--")
+ax.legend()
 
-fig = matplotlib.pyplot.gcf()
-fig.set_dpi(fig_dpi)
-fig.set_tight_layout(True)
-if fig_export or True:
+if fig_export:
     savefig("report/res/iterated-pdfs.png")
-plt.show()
+fig.show()
 
 # %% [markdown]
 # # Baum-Welch State Transition Re-estimations
@@ -419,6 +422,11 @@ model = MarkovModel(states=[state1, state2],
                     state_transitions=state_transition).populate()
 
 print(a_matrix)
+print(model.reestimated_state_transitions())
 model.reestimated_state_transitions()
+
+
+# %%
+
 
 
